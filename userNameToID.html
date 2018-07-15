@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="jquery-3.3.1.min.js"></script>
+    <title>UserName To ID</title>
+</head>
+<body>
+    Api Key: <input type="text" id="apiKey" value="AIzaSyCHnzMubidMnaJWfleUNKQMdCYCzvzwNUo"> <br> <br>
+    UserName: <input type="text" id="UserName"> <br>
+    <input type="submit" value="check" id="UStoID"> <br> <br>
+    <div>Result: <span id="result"></span></div>
+    <script>
+        $("#UStoID").click(function(){
+            var apiKey = $("#apiKey").val();
+            var userName = $("#UserName").val();
+            $.ajax({
+                type: "GET",
+                url: "https://www.googleapis.com/youtube/v3/channels?part=snippet&forUsername=" + userName + "&key=" + apiKey,
+                success: function(data){
+                    console.log(data);
+                    if(data.items.length){
+                        $("#result").text(data.items[0].id);
+                    } else{
+                        $("#result").text("error");
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
